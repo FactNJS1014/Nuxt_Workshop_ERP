@@ -13,23 +13,84 @@ definePageMeta({
 
 const name = ref('')
 const remark = ref('')
+const productTypes = ref([])
+const id = ref('')
 
-const closeModal = () =>{
+const closeModal = () => {
     showModal.value = false
 }
 
-const save = async ()=>{
+const save = async () => {
     try {
         const payload = {
             name: name.value,
             remark: remark.value
         }
-        const res = await axios.post(`${config.apiServer}/api/productType/create`, payload)
+        if (id.value === '') {
+            await axios.post(`${config.apiServer}/api/productType/create`, payload)
+        } else {
+            await axios.put(`${config.apiServer}/api/productType/update/${id.value}`, payload)
+        }
+
+        await fetchData()
+        name.value = ''
+        remark.value = ''
+        closeModal()
+
     } catch (e) {
         Swal.fire({
             icon: 'error',
             title: 'Error',
             text: e.message,
+        })
+    }
+}
+
+const update = async (productType) => {
+    id.value = productType.id
+    name.value = productType.name
+    remark.value = productType.remark
+    showModal.value = true
+}
+
+const remove = async (id) =>{
+    try {
+        const button = await Swal.fire({
+            icon: 'warning',
+            title: 'ยืนยันการลบ',
+            text: 'คุณต้องการลบประเภทสินค้านี้หรือไม่?',
+            showCancelButton: true,
+            showConfirmButton: true,
+        })
+
+        if(button.isConfirmed){
+            await axios.delete(`${config.apiServer}/api/productType/remove/${id}`)
+            await fetchData()
+        }
+        
+    } catch (e) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: e.message,
+        })
+    }
+}
+
+onMounted(async () => {
+    await fetchData()
+})
+
+const fetchData = async () => {
+    try {
+        const res = await axios.get(`${config.apiServer}/api/productType/list`)
+        productTypes.value = res.data.results
+
+    } catch (e) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: e.message
         })
     }
 }
@@ -42,6 +103,32 @@ const save = async ()=>{
             <i class="fa fa-plus"></i>
             เพิ่มประเภทสินค้า
         </button>
+        <table class="table table-bordered mt-3">
+            <thead>
+                <tr>
+                    <th>ชื่อสินค้า</th>
+                    <th>หมายเหตุ</th>
+                    <th width="110px"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="productType in productTypes" :key="productType.id">
+                    <td>{{ productType.name }}</td>
+                    <td>{{ productType.remark }}</td>
+                    <td class="text-center">
+                        <div class="flex justify-start items-center">
+                            <button class="btn btn-primary me-1" @click="update(productType)">
+                                <i class="fa fa-pencil"></i>
+                            </button>
+                            <button class="btn btn-danger" @click="remove(productType.id)">
+                                <i class="fa fa-trash"></i>
+                            </button>
+                        </div>
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 
     <Modal v-if="showModal" title="เพิ่มประเภทสินค้า" @close="closeModal">
@@ -51,6 +138,6 @@ const save = async ()=>{
         <div class="mt-3">หมายเหตุ</div>
         <input type="text" class="form-control" v-model="remark">
 
-        <button class="btn btn-primary mt-3" @click="save"><i class="fa fa-check me-2" ></i>บันทึก</button>
+        <button class="btn btn-primary mt-3" @click="save"><i class="fa fa-check me-2"></i>บันทึก</button>
     </Modal>
 </template>

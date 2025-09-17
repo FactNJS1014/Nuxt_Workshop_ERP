@@ -53,7 +53,7 @@ const update = async (productType) => {
     showModal.value = true
 }
 
-const remove = async (id) =>{
+const remove = async (id) => {
     try {
         const button = await Swal.fire({
             icon: 'warning',
@@ -63,11 +63,11 @@ const remove = async (id) =>{
             showConfirmButton: true,
         })
 
-        if(button.isConfirmed){
+        if (button.isConfirmed) {
             await axios.delete(`${config.apiServer}/api/productType/remove/${id}`)
             await fetchData()
         }
-        
+
     } catch (e) {
         Swal.fire({
             icon: 'error',
@@ -97,8 +97,8 @@ const fetchData = async () => {
 </script>
 
 <template>
-    <div>ประเภทสินค้า</div>
-    <div class="mt-3">
+    <div class="title">ประเภทสินค้า</div>
+    <div class="p-4">
         <button class="btn btn-primary" @click="showModal = true">
             <i class="fa fa-plus"></i>
             เพิ่มประเภทสินค้า
@@ -106,8 +106,8 @@ const fetchData = async () => {
         <table class="table table-bordered mt-3">
             <thead>
                 <tr>
-                    <th>ชื่อสินค้า</th>
-                    <th>หมายเหตุ</th>
+                    <th class="text-left">ชื่อสินค้า</th>
+                    <th class="text-left">หมายเหตุ</th>
                     <th width="110px"></th>
                 </tr>
             </thead>
@@ -121,7 +121,7 @@ const fetchData = async () => {
                                 <i class="fa fa-pencil"></i>
                             </button>
                             <button class="btn btn-danger" @click="remove(productType.id)">
-                                <i class="fa fa-trash"></i>
+                                <i class="fa fa-times"></i>
                             </button>
                         </div>
 

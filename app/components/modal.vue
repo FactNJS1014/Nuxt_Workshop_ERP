@@ -1,7 +1,23 @@
 <script setup>
 const emit = defineEmits(["close"]);
-defineProps({
+const props = defineProps({
   title: String,
+  size: {
+    type: String,
+    default: "md",
+  },
+});
+
+const modalWidth = computed(() => {
+  switch (props.size) {
+    case "lg":
+      return "max-w-2xl";
+    case "xl":
+      return "max-w-4xl";
+    case "md":
+    default:
+      return "max-w-lg";
+  }
 });
 
 const closeModal = () => {
@@ -23,7 +39,7 @@ onMounted(() => {
   <div
     class="fixed inset-0 bg-gray-300 bg-opacity-10 flex justify-center items-center shadow-lg"
   >
-    <div class="w-full max-w-lg">
+    <div :class="`w-full ${modalWidth}`">
       <div
         class="modal-title bg-gray-700 text-gray-100 p-4 rounded-tl-xl rounded-tr-xl shadow-lg flex justify-between items-center"
       >

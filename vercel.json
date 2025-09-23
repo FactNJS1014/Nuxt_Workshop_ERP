@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "builds": [
+    
+    { "src": "frontend/nuxt.config.ts", "use": "@vercel/nuxt" }
+  ],
+  "routes": [
+    
+    { "src": "/(.*)", "dest": "frontend/$1" }
+  ]
+}

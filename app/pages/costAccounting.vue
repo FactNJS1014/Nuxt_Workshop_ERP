@@ -11,7 +11,7 @@ const products = ref([]);
 
 onMounted(async () => {
     try {
-        const res = await axios.get(`${config.apiServer}/api/report/productCost`);
+        const res = await axios.get(`${config.apiServer}/api/report/productsAndCost`);
         products.value = res.data.results;
 
         products.value.forEach((product) => {
@@ -39,8 +39,8 @@ onMounted(async () => {
         <table class="table">
             <thead>
                 <tr>
-                    <th class="text-left">สินค้า</th>
-                    <th class="text-right" width="150px">ต้นทุนการผลิต (บาท)</th>
+                    <th class="text-left" width="200px">สินค้า</th>
+                    <th class="text-right">ต้นทุนการผลิต (บาท)</th>
                 </tr>
             </thead>
             <tbody>
@@ -56,7 +56,31 @@ onMounted(async () => {
                             </div>
                             <table class="table mt-2">
                                 <tbody>
-                                    <tr></tr>
+                                    <tr>
+                                        <td class="text-left bg-gray-200 font-bold">วัตถุดิบ</td>
+                                        <td class="text-right bg-gray-200 font-bold" width="80">สัดส่วน</td>
+                                        <td class="text-right bg-gray-200 font-bold" width="90">ราคา</td>
+                                        <td class="text-right bg-gray-200 font-bold border-gray-100" width="100">
+                                            มูลค่าทุน
+                                        </td>
+                                    </tr>
+
+                                    <tr v-for="material in product.ProductFormular" :key="material.id">
+                                        <td class="text-left">{{ material.Material.name }}</td>
+                                        <td class="text-right">
+                                            {{ material.quantity }}
+                                        </td>
+                                        <td class="text-right">
+                                            {{ material.Material.price.toLocaleString("th-TH") }}
+                                        </td>
+                                        <td class="text-right border-gray-100 border-t-2 bg-gray-300">
+                                            {{
+                                                (material.quantity * material.Material.price).toLocaleString(
+                                                    "th-TH"
+                                            )
+                                            }}
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>

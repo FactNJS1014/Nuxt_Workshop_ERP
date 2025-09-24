@@ -22,7 +22,7 @@ const search = async () => {
             fromDate: fromDate.value,
             toDate: toDate.value,
         };
-        const res = await axios.post(`${config.apiServer}/report/production`, payload);
+        const res = await axios.post(`${config.apiServer}/api/report/production`, payload);
         productions.value = res.data.results;
     } catch (error) {
         Swal.fire({

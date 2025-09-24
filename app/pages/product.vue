@@ -59,9 +59,9 @@ const save = async () => {
     };
 
     if (id.value == "") {
-      await axios.post(`${config.apiServer}/product/create`, payload);
+      await axios.post(`${config.apiServer}/api/product/create`, payload);
     } else {
-      await axios.put(`${config.apiServer}/product/update/${id.value}`, payload);
+      await axios.put(`${config.apiServer}/api/product/update/${id.value}`, payload);
       id.value = "";
     }
 
@@ -78,17 +78,17 @@ const save = async () => {
 
 const fetchData = async () => {
   try {
-    const res = await axios.get(`${config.apiServer}/product/list`);
+    const res = await axios.get(`${config.apiServer}/api/product/list`);
     products.value = res.data.results;
 
     if (packaging.value.length === 0) {
-      const resPackaging = await axios.get(`${config.apiServer}/packaging/list`);
+      const resPackaging = await axios.get(`${config.apiServer}/api/packaging/list`);
       packaging.value = resPackaging.data.results;
       selectedPackagingId.value = packaging.value[0].id;
     }
 
     if (productTypes.value.length === 0) {
-      const resProductType = await axios.get(`${config.apiServer}/productType/list`);
+      const resProductType = await axios.get(`${config.apiServer}/api/productType/list`);
       productTypes.value = resProductType.data.results;
       selectedProductTypeId.value = productTypes.value[0].id;
     }
@@ -122,7 +122,7 @@ const remove = async (id) => {
     });
 
     if (button.isConfirmed) {
-      await axios.delete(`${config.apiServer}/product/remove/${id}`);
+      await axios.delete(`${config.apiServer}/api/product/remove/${id}`);
       await fetchData();
     }
   } catch (error) {
@@ -165,7 +165,7 @@ const openModalFormular = async (productId) => {
 
 const fetchDataMaterial = async () => {
   try {
-    const res = await axios.get(`${config.apiServer}/material/list`);
+    const res = await axios.get(`${config.apiServer}/api/material/list`);
     materials.value = res.data.results;
     materialId.value = materials.value[0].id;
   } catch (error) {
@@ -179,7 +179,7 @@ const fetchDataMaterial = async () => {
 
 const fetchDataFormular = async (productId) => {
   try {
-    const url = `${config.apiServer}/productFormular/list/${productId}`;
+    const url = `${config.apiServer}/api/productFormular/list/${productId}`;
     const response = await axios.get(url);
     formulars.value = response.data.results;
   } catch (error) {
@@ -201,10 +201,10 @@ const saveFormular = async () => {
     };
 
     if (selectedFormularId.value == "") {
-      await axios.post(`${config.apiServer}/productFormular/create`, payload);
+      await axios.post(`${config.apiServer}/api/productFormular/create`, payload);
     } else {
       await axios.put(
-        `${config.apiServer}/productFormular/update/${selectedFormularId.value}`,
+        `${config.apiServer}/api/productFormular/update/${selectedFormularId.value}`,
         payload
       );
       selectedFormularId.value = "";
@@ -240,7 +240,7 @@ const removeFormular = async (id) => {
     });
 
     if (button.isConfirmed) {
-      await axios.delete(`${config.apiServer}/productFormular/remove/${id}`);
+      await axios.delete(`${config.apiServer}/api/productFormular/remove/${id}`);
       await fetchDataFormular(selectProductId.value);
     }
   } catch (error) {

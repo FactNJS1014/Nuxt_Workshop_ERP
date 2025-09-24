@@ -11,7 +11,7 @@ const products = ref([]);
 
 onMounted(async () => {
     try {
-        const res = await axios.get(`${config.apiServer}/report/productsAndCost`);
+        const res = await axios.get(`${config.apiServer}/api/report/productsAndCost`);
         products.value = res.data.results;
 
         products.value.forEach((product) => {

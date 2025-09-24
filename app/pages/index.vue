@@ -52,7 +52,7 @@ const handleSubmit = async () => {
         text: 'Username or Password are required.',
       })
     } else {
-      const response = await axios.post(`${config.apiServer}/user/signIn`, {
+      const response = await axios.post(`${config.apiServer}/api/user/signIn`, {
         username: username.value,
         password: password.value,
       })

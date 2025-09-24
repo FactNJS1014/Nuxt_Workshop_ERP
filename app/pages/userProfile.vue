@@ -23,7 +23,7 @@ const fetchData = async () => {
         const headers = {
             'Authorization': `Bearer ${token}`
         }
-        const response = await axios.get(`${config.apiServer}/user/info`, { headers })
+        const response = await axios.get(`${config.apiServer}/api/user/info`, { headers })
         name.value = response.data.result.name
         username.value = response.data.result.username
         level.value = response.data.result.level
@@ -60,7 +60,7 @@ const save = async () => {
             level: level.value
         }
 
-        await axios.put(`${config.apiServer}/user/update`, payload, { headers })
+        await axios.put(`${config.apiServer}/api/user/update`, payload, { headers })
         Swal.fire({
             icon: 'success',
             title: 'บันทึกข้อมูล',

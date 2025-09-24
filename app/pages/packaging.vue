@@ -25,9 +25,9 @@ const save = async () => {
     };
 
     if (id.value == "") {
-      await axios.post(`${config.apiServer}/packaging/create`, payload);
+      await axios.post(`${config.apiServer}/api/packaging/create`, payload);
     } else {
-      await axios.put(`${config.apiServer}/packaging/update/${id.value}`, payload);
+      await axios.put(`${config.apiServer}/api/packaging/update/${id.value}`, payload);
     }
 
     closeModalAddPackaging();
@@ -47,7 +47,7 @@ onMounted(async () => {
 
 const fetchData = async () => {
   try {
-    const response = await axios.get(`${config.apiServer}/packaging/list`);
+    const response = await axios.get(`${config.apiServer}/api/packaging/list`);
     packaging.value = response.data.results;
   } catch (error) {
     Swal.fire({
@@ -68,7 +68,7 @@ const remove = async (id) => {
     });
 
     if (button.isConfirmed) {
-      await axios.delete(`${config.apiServer}/packaging/remove/${id}`);
+      await axios.delete(`${config.apiServer}/api/packaging/remove/${id}`);
       await fetchData();
     }
   } catch (error) {

@@ -5,6 +5,6 @@
 // };
 
 export default {
-  apiServer: "https://nuxt-api-alpha.vercel.app/api",
+  apiServer: "https://nuxt-api-alpha.vercel.app",
   token: "token_nuxt_erp",
 };

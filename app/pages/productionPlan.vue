@@ -35,7 +35,7 @@ const closeModal = () => {
 const fetchProducts = async () => {
     try {
         if (products.value.length === 0) {
-            const res = await axios.get(`${config.apiServer}/api/product/list`);
+            const res = await axios.get(`${config.apiServer}/product/list`);
             products.value = res.data.results;
             selectedProductId.value = products.value[0].id;
         }
@@ -50,7 +50,7 @@ const fetchProducts = async () => {
 
 const fetchProductionPlans = async () => {
     try {
-        const res = await axios.get(`${config.apiServer}/api/productionPlan/list`);
+        const res = await axios.get(`${config.apiServer}/productionPlan/list`);
         productionPlans.value = res.data.results;
     } catch (error) {
         Swal.fire({
@@ -70,10 +70,10 @@ const saveProductionPlan = async () => {
         };
 
         if (id.value === "") {
-            await axios.post(`${config.apiServer}/api/productionPlan/create`, payload);
+            await axios.post(`${config.apiServer}/productionPlan/create`, payload);
         } else {
             await axios.put(
-                `${config.apiServer}/api/productionPlan/update/${id.value}`,
+                `${config.apiServer}/productionPlan/update/${id.value}`,
                 payload
             );
             id.value = "";
@@ -108,7 +108,7 @@ const deleteProductionPlan = async (planId) => {
         });
 
         if (button.isConfirmed) {
-            await axios.delete(`${config.apiServer}/api/productionPlan/remove/${planId}`);
+            await axios.delete(`${config.apiServer}/productionPlan/remove/${planId}`);
             await fetchProductionPlans();
         }
     } catch (error) {

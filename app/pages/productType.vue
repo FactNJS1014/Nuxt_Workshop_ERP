@@ -27,9 +27,9 @@ const save = async () => {
             remark: remark.value
         }
         if (id.value === '') {
-            await axios.post(`${config.apiServer}/api/productType/create`, payload)
+            await axios.post(`${config.apiServer}/productType/create`, payload)
         } else {
-            await axios.put(`${config.apiServer}/api/productType/update/${id.value}`, payload)
+            await axios.put(`${config.apiServer}/productType/update/${id.value}`, payload)
         }
 
         await fetchData()
@@ -64,7 +64,7 @@ const remove = async (id) => {
         })
 
         if (button.isConfirmed) {
-            await axios.delete(`${config.apiServer}/api/productType/remove/${id}`)
+            await axios.delete(`${config.apiServer}/productType/remove/${id}`)
             await fetchData()
         }
 
@@ -83,7 +83,7 @@ onMounted(async () => {
 
 const fetchData = async () => {
     try {
-        const res = await axios.get(`${config.apiServer}/api/productType/list`)
+        const res = await axios.get(`${config.apiServer}/productType/list`)
         productTypes.value = res.data.results
 
     } catch (e) {

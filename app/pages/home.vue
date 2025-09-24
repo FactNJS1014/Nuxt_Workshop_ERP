@@ -68,7 +68,7 @@ const fetchDataSumProductionPlan = async () => {
             year: selectedYear.value,
         };
         const res = await axios.post(
-            `${config.apiServer}/api/report/sumProductionPlanPerYearAndMonth`,
+            `${config.apiServer}/report/sumProductionPlanPerYearAndMonth`,
             payload
         );
 
@@ -89,7 +89,7 @@ const fetchDataSumProduction = async () => {
             year: selectedYear.value,
         };
         const res = await axios.post(
-            `${config.apiServer}/api/report/sumProductionPerYearAndMonth`,
+            `${config.apiServer}/report/sumProductionPerYearAndMonth`,
             payload
         );
 
@@ -112,7 +112,7 @@ const fetchDataSumPurchase = async () => {
             year: selectedYear.value,
         };
         const res = await axios.post(
-            `${config.apiServer}/api/report/sumPriceStockMaterial`,
+            `${config.apiServer}/report/sumPriceStockMaterial`,
             payload
         );
 
@@ -132,7 +132,7 @@ const renderChartMonth = async () => {
             year: selectedYear.value,
         };
         const res = await axios.post(
-            `${config.apiServer}/api/report/sumProductionPerMonthAndYear`,
+            `${config.apiServer}/report/sumProductionPerMonthAndYear`,
             payload
         );
 
@@ -187,7 +187,7 @@ const renderChartDays = async () => {
             year: selectedYear.value,
         };
         const res = await axios.post(
-            `${config.apiServer}/api/report/sumProductPerDayInMonthAndYear`,
+            `${config.apiServer}/report/sumProductPerDayInMonthAndYear`,
             payload
         );
 

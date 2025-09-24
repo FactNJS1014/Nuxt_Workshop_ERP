@@ -41,7 +41,7 @@ const closeModal = () => {
 
 const fetchProductionPlans = async () => {
     try {
-        const res = await axios.get(`${config.apiServer}/api/productionPlan/list`);
+        const res = await axios.get(`${config.apiServer}/productionPlan/list`);
         productPlans.value = res.data.results;
 
         for (const productionPlan of productPlans.value) {
@@ -78,7 +78,7 @@ const save = async () => {
             remark: remark.value,
         };
 
-        await axios.post(`${config.apiServer}/api/production/create`, data);
+        await axios.post(`${config.apiServer}/production/create`, data);
 
         Swal.fire({
             icon: "success",
@@ -112,7 +112,7 @@ const closeModalProduction = () => {
 const fetchDataProductions = async () => {
     try {
         const res = await axios.get(
-            `${config.apiServer}/api/production/list/${selectedProductionPlanId.value}`
+            `${config.apiServer}/production/list/${selectedProductionPlanId.value}`
         );
         productions.value = res.data.results;
     } catch (error) {
@@ -138,7 +138,7 @@ const removeProduction = async (productionId) => {
         });
 
         if (button.isConfirmed) {
-            await axios.delete(`${config.apiServer}/api/production/remove/${productionId}`);
+            await axios.delete(`${config.apiServer}/production/remove/${productionId}`);
 
             await fetchDataProductions();
             await fetchProductionPlans();

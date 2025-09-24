@@ -31,7 +31,7 @@ const listStockMaterials = ref([]);
 
 const fetchDataStockMaterial = async () => {
   try {
-    const res = await axios.get(`${config.apiServer}/api/stockMaterial/list`);
+    const res = await axios.get(`${config.apiServer}/stockMaterial/list`);
     listStockMaterials.value = res.data.results;
   } catch (e) {
     Swal.fire({
@@ -56,7 +56,7 @@ const openModalStockMaterial = async () => {
   showModalStockMaterial.value = true;
 
   try {
-    const res = await axios.get(`${config.apiServer}/api/material/list`);
+    const res = await axios.get(`${config.apiServer}/material/list`);
     listMaterials.value = res.data.results;
     stockMaterialId.value = materials.value[0].id;
   } catch (e) {
@@ -103,9 +103,9 @@ const save = async () => {
       remark: remark.value,
     };
     if (id.value === "") {
-      await axios.post(`${config.apiServer}/api/material/create`, payload);
+      await axios.post(`${config.apiServer}/material/create`, payload);
     } else {
-      await axios.put(`${config.apiServer}/api/material/update/${id.value}`, payload);
+      await axios.put(`${config.apiServer}/material/update/${id.value}`, payload);
       id.value = "";
     }
     await fetchData();
@@ -127,7 +127,7 @@ const saveStockMaterial = async () => {
       price: stockMaterialPrice.value,
       remark: stockMaterialRemark.value,
     };
-    await axios.post(`${config.apiServer}/api/stockMaterial/create`, payload);
+    await axios.post(`${config.apiServer}/stockMaterial/create`, payload);
     closeModalStockMaterial();
     fetchData();
   } catch (e) {
@@ -156,7 +156,7 @@ const remove = async (id) => {
     });
 
     if (button.isConfirmed) {
-      await axios.delete(`${config.apiServer}/api/material/remove/${id}`);
+      await axios.delete(`${config.apiServer}/material/remove/${id}`);
       await fetchData();
     }
   } catch (error) {
@@ -174,7 +174,7 @@ onMounted(async () => {
 
 const fetchData = async () => {
   try {
-    const res = await axios.get(`${config.apiServer}/api/material/list`);
+    const res = await axios.get(`${config.apiServer}/material/list`);
     for (const material of res.data.results) {
       material.balance = 0;
 
@@ -204,7 +204,7 @@ const removeStockMaterial = async (id) => {
     });
 
     if (button.isConfirmed) {
-      await axios.delete(`${config.apiServer}/api/stockMaterial/remove/${id}`);
+      await axios.delete(`${config.apiServer}/stockMaterial/remove/${id}`);
       closeModalStockMaterialHistory();
 
       fetchData();
@@ -288,17 +288,9 @@ const removeStockMaterial = async (id) => {
     </button>
   </Modal>
 
-  <Modal
-    v-if="showModalStockMaterial"
-    title="รับเข้าสต๊อก"
-    @close="closeModalStockMaterial"
-  >
+  <Modal v-if="showModalStockMaterial" title="รับเข้าสต๊อก" @close="closeModalStockMaterial">
     <div>วัสดุ ,ส่วนผสม</div>
-    <select
-      class="form-control"
-      v-model="stockMaterialMaterialId"
-      @change="selectStockMaterial"
-    >
+    <select class="form-control" v-model="stockMaterialMaterialId" @change="selectStockMaterial">
       <option v-for="material in materials" :key="material.id" :value="material.id">
         {{ material.name }}
       </option>
@@ -319,12 +311,8 @@ const removeStockMaterial = async (id) => {
     </button>
   </Modal>
 
-  <Modal
-    v-if="showModalStockMaterialHistory"
-    title="ประวัติการรับเข้าสต๊อก"
-    @close="closeModalStockMaterialHistory"
-    size="xl"
-  >
+  <Modal v-if="showModalStockMaterialHistory" title="ประวัติการรับเข้าสต๊อก" @close="closeModalStockMaterialHistory"
+    size="xl">
     <table class="table mt-3" spacing="1">
       <thead>
         <tr>
@@ -347,10 +335,7 @@ const removeStockMaterial = async (id) => {
           <td class="text-right">{{ stockMaterial.price.toLocaleString("th-TH") }}</td>
           <td>{{ dayjs(stockMaterial.createAt).format("DD/MM/YYYY HH:MM") }}</td>
           <td class="text-center">
-            <button
-              class="btn btn-sm btn-danger"
-              @click="removeStockMaterial(stockMaterial.id)"
-            >
+            <button class="btn btn-sm btn-danger" @click="removeStockMaterial(stockMaterial.id)">
               <i class="fa fa-times"></i>
             </button>
           </td>

@@ -51,23 +51,23 @@ const handleSubmit = async () => {
         title: 'Error',
         text: 'Username or Password are required.',
       })
-    }else{
-      const response = await axios.post(`${config.apiServer}/api/user/signIn`,{
+    } else {
+      const response = await axios.post(`${config.apiServer}/user/signIn`, {
         username: username.value,
         password: password.value,
       })
 
-      if(response.status === 200){
+      if (response.status === 200) {
         console.log(response.data)
         localStorage.setItem(config.token, response.data.token)
         localStorage.setItem('nuxt_erp_user_id', response.data.id)
         navigateTo('/home')
-      }else{
+      } else {
         Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'Invalid username or password',
-      })
+          icon: 'error',
+          title: 'Error',
+          text: 'Invalid username or password',
+        })
       }
     }
 

@@ -19,7 +19,7 @@ const listLevel = ref(["admin", "user"]);
 
 const fetchData = async () => {
     try {
-        const res = await axios.get(`${config.apiServer}/api/user/list`);
+        const res = await axios.get(`${config.apiServer}/user/list`);
         users.value = res.data.results;
     } catch (error) {
         Swal.fire({
@@ -67,9 +67,9 @@ const save = async () => {
         };
 
         if (id.value === "") {
-            await axios.post(`${config.apiServer}/api/user/create`, payload);
+            await axios.post(`${config.apiServer}/user/create`, payload);
         } else {
-            await axios.put(`${config.apiServer}/api/user/updateUser/${id.value}`, payload);
+            await axios.put(`${config.apiServer}/user/updateUser/${id.value}`, payload);
             id.value = "";
         }
 
@@ -106,7 +106,7 @@ const removeUser = async (user) => {
         });
 
         if (result.isConfirmed) {
-            await axios.delete(`${config.apiServer}/api/user/remove/${user.id}`);
+            await axios.delete(`${config.apiServer}/user/remove/${user.id}`);
             await fetchData();
         }
     } catch (error) {

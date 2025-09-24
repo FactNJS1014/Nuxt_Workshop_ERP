@@ -5,6 +5,6 @@
 // };
 
 export default {
-  apiServer: "/api", // ✅ ใช้ path relative ไปยัง serverless api
+  apiServer: process.env.NUXT_PUBLIC_API_SERVER || "http://localhost:3001",
   token: "token_nuxt_erp",
 };

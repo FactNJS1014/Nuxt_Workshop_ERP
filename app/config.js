@@ -5,6 +5,6 @@
 // };
 
 export default {
-  apiServer: process.env.NUXT_PUBLIC_API_SERVER || "http://localhost:3001",
+  apiServer: process.env.NUXT_PUBLIC_API_SERVER,
   token: "token_nuxt_erp",
 };

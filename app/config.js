@@ -5,6 +5,6 @@
 // };
 
 export default {
-  apiServer: process.env.NUXT_PUBLIC_API_SERVER,
+  apiServer: "https://nuxt-api-alpha.vercel.app/api",
   token: "token_nuxt_erp",
 };
